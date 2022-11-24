@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('You are logged in! You can log out by clicking your username or you can go back...') }}
+                    <br>
+                    <br>
+                    <a href="/" class="btn btn-primary">Go Back</a>
                 </div>
             </div>
         </div>
