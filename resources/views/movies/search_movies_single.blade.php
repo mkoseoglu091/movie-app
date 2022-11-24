@@ -36,6 +36,7 @@
     </p>
     
   </div>
+  @auth
   <div class="mx-3 mt-5">
   <form method="POST" action="/movies/add">
     @csrf
@@ -72,6 +73,7 @@
         
     </form>
   </div>
+  @endauth
 </div>
 
 
