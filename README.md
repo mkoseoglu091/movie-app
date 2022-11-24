@@ -24,3 +24,7 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 5. Once you find the movie you are looking for, you can add that movie to your own list, but you need to provide a date watched. You can also provide a rating out of 10 and any comments.
 6. The movies that you add will appear in 'My List', you can delete or edit these movies.
 7. php artisan route:list to see all routes
+
+#### To Do
+1. user_id in routes are no longer needed, carefully remove them
+2. User Delete Option
