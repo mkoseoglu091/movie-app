@@ -13,6 +13,7 @@ use App\Models\Movie;
 use App\Models\Scene;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 
 class MovieController extends Controller {
@@ -57,6 +58,11 @@ class MovieController extends Controller {
     }
 
     function AllMovies($user_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         //Initialize View data
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
@@ -70,8 +76,17 @@ class MovieController extends Controller {
 
 
     function FilterMoviesWatched(Request $request, $user_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $viewData = array();
         $viewData['Title'] = 'Movies By Date Watched';
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
 
         $movies = array();
         $movies = User::findorFail($user_id)->movie->toArray();
@@ -96,6 +111,11 @@ class MovieController extends Controller {
     }
 
     function FilterMoviesReleased(Request $request, $user_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $viewData = array();
         $viewData['Title'] = 'Movies By Date Released';
 
@@ -122,6 +142,11 @@ class MovieController extends Controller {
     }
 
     function FilterMoviesAll(Request $request, $user_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $viewData = array();
         $viewData['Title'] = 'Movies By Director';
 
@@ -166,6 +191,11 @@ class MovieController extends Controller {
     }
 
     function FilterMoviesDirector(Request $request, $user_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $viewData = array();
         $viewData['Title'] = 'Movies By Director';
 
@@ -186,6 +216,11 @@ class MovieController extends Controller {
     }
 
     function DeleteMovie($user_id, $id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         Movie::destroy($id);
 
         $viewData = array();
@@ -199,47 +234,55 @@ class MovieController extends Controller {
 
     function SingleMovie($user_id, $id)  {
 
-    //Grab the course from the database
-    $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
 
-    //Initialize View data
-    $viewData = array();
-    $viewData['Title'] = $movie->title;
-    $viewData['movie'] = $movie;
-    $viewData['user_id'] = $user_id;
-    $viewData['id'] = $id;
-    $viewData['movieData'] = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-    
-    $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-    $cast = $credits["cast"];
-    $highlight = array_slice($cast, 0, 8);
-    $viewData['actors'] = $highlight;
+        //Grab the course from the database
+        $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
 
-    return view('movies.my_list_single')
-        ->with('viewData',$viewData);
+        //Initialize View data
+        $viewData = array();
+        $viewData['Title'] = $movie->title;
+        $viewData['movie'] = $movie;
+        $viewData['user_id'] = $user_id;
+        $viewData['id'] = $id;
+        $viewData['movieData'] = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        
+        $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        $cast = $credits["cast"];
+        $highlight = array_slice($cast, 0, 8);
+        $viewData['actors'] = $highlight;
+
+        return view('movies.my_list_single')
+            ->with('viewData',$viewData);
     }
 
     function EditMovie($user_id, $id)  {
 
-    //Grab the course from the database
-    $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
 
-    //Initialize View data
-    $viewData = array();
-    $viewData['Title'] = $movie->title;
-    $viewData['movie'] = $movie;
-    $viewData['user_id'] = $user_id;
-    $viewData['id'] = $id;
-    $viewData['movieData'] = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-    
-    $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-    $cast = $credits["cast"];
-    $highlight = array_slice($cast, 0, 8);
-    $viewData['actors'] = $highlight;
+        //Grab the course from the database
+        $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
+
+        //Initialize View data
+        $viewData = array();
+        $viewData['Title'] = $movie->title;
+        $viewData['movie'] = $movie;
+        $viewData['user_id'] = $user_id;
+        $viewData['id'] = $id;
+        $viewData['movieData'] = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        
+        $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->tmdb_id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        $cast = $credits["cast"];
+        $highlight = array_slice($cast, 0, 8);
+        $viewData['actors'] = $highlight;
 
 
-    return view('movies.my_list_single_edit')
-        ->with('viewData',$viewData);
+        return view('movies.my_list_single_edit')
+            ->with('viewData',$viewData);
     }
 
     function ShowMovie($id){
@@ -267,6 +310,7 @@ class MovieController extends Controller {
     }
 
     function AddMovie(Request $request){
+
         // validate request
         // only watched date is required, rest are taken from existing movie data
         // user does not have to provide a rating or comment
@@ -275,7 +319,7 @@ class MovieController extends Controller {
         ]);
 
         $newMovie = new Movie();
-        $newMovie->user_id = $request->input('user_id');
+        $newMovie->user_id = Auth::check() ? Auth::id() : $request->input('user_id');
         $newMovie->tmdb_id = $request->input('tmdb_id');
         $newMovie->title = $request->input('title');
         $newMovie->image = $request->input('image');
@@ -296,6 +340,11 @@ class MovieController extends Controller {
     }
 
     function UpdateMovie(Request $request, $user_id, $id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+    
         $request->validate([
             "watched_date" => "required",
         ]);
@@ -321,6 +370,11 @@ class MovieController extends Controller {
     }
 
     function ScenesList($user_id, $id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
         $scenes = $movie->scene;
@@ -334,6 +388,11 @@ class MovieController extends Controller {
     }
 
     function ScenesAdd($user_id, $id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
 
         $viewData['Title'] = 'Add Scene';
@@ -345,6 +404,11 @@ class MovieController extends Controller {
     }
 
     function ScenesEdit($user_id, $id, $scene_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $scene = Scene::findorFail($scene_id);
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
 
@@ -362,6 +426,11 @@ class MovieController extends Controller {
     }
     
     function ScenesSave(Request $request, $user_id, $id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $request->validate([
             "file" => "mimes:jpeg,png,jpg|max:50",
         ]);
@@ -412,6 +481,10 @@ class MovieController extends Controller {
 
     function ScenesUpdate(Request $request, $user_id, $id, $scene_id) {
 
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         $scene = Scene::findorFail($scene_id);
 
         $scene->comments = $request->input('comments') ? $request->input('comments') : '';
@@ -438,6 +511,11 @@ class MovieController extends Controller {
 
 
     function ScenesDelete($user_id, $id, $scene_id) {
+
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }
+
         Scene::destroy($scene_id);
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
