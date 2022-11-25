@@ -158,24 +158,36 @@ class MovieController extends Controller {
         if($request->input('release_from') !== null){
             $filtered = array_filter($movies, function($movie) use($request){ return $movie["release_date"] > $request->input('release_from'); });
             $movies = $filtered;
+            $viewData['release_from'] = $request->input('release_from');
+        } else {
+            $viewData['release_from'] = "";
         }
 
         // filter if to date exists
         if($request->input('release_to') !== null){
             $filtered = array_filter($movies, function($movie) use($request){ return $movie["release_date"] < $request->input('release_to'); });
             $movies = $filtered;
+            $viewData['release_to'] = $request->input('release_to');
+        } else {
+            $viewData['release_to'] = "";
         }
 
         // filter if from date exists
         if($request->input('watch_from') !== null){
             $filtered = array_filter($movies, function($movie) use($request){ return $movie["watched_date"] > $request->input('watch_from'); });
             $movies = $filtered;
+            $viewData['watch_from'] = $request->input('watch_from');
+        } else {
+            $viewData['watch_from'] = "";
         }
 
         // filter if to date exists
         if($request->input('watch_to') !== null){
             $filtered = array_filter($movies, function($movie) use($request){ return $movie["watched_date"] < $request->input('watch_to'); });
             $movies = $filtered;
+            $viewData['watch_to'] = $request->input('watch_to');
+        } else {
+            $viewData['watch_to'] = "";
         }
 
         // filter if from date exists
@@ -183,6 +195,16 @@ class MovieController extends Controller {
             $filtered = array_filter($movies, function($movie) use($request){ return str_contains(strtolower($movie["director"]), strtolower($request->input('director'))); });
             $movies = $filtered;
         }
+
+        // director options
+        $directors = array();
+
+        foreach ($movies as $m){
+            $directors[] = $m['director'];
+        }
+
+        $director_freq = array_count_values($directors);
+        $viewData['director_freq'] = $director_freq;
 
         $viewData['movies'] = $movies;
 

@@ -45,6 +45,22 @@
         
     </form>
   <h2>Filter Results</h2>
+  @if(count($viewData['director_freq']) > 1)
+  <div class="mb-3">
+    @foreach($viewData['director_freq'] as $key => $value)
+    <form style="float:left;" class="form-inline mb-3 mx-1" action="?" method="POST">
+      @csrf
+      <input class="form-control w-25" name="director" type="hidden" value="{{ $key }}">
+      <input class="form-control w-25" name="release_from" type="hidden" value="{{ $viewData['release_from'] }}">
+      <input class="form-control w-25" name="release_to" type="hidden" value="{{ $viewData['release_to'] }}">
+      <input class="form-control w-25" name="watch_from" type="hidden" value="{{ $viewData['watch_from'] }}">
+      <input class="form-control w-25" name="watch_to" type="hidden" value="{{ $viewData['watch_to'] }}">
+
+      <button type="submit" class="btn btn-dark" value="{{ $key }}">{{ $key }}</button>
+    </form>
+    @endforeach
+</div>
+  @endif
 </div>
 @forelse($viewData["movies"] as $movie) 
 <div class="card text-white bg-secondary mb-3 mx-3" style="width: 18rem;">
