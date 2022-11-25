@@ -67,7 +67,7 @@ class MovieController extends Controller {
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie;
+        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
         $viewData['user_id'] = $user_id;
 
         return view('movies.my_list')
@@ -89,7 +89,7 @@ class MovieController extends Controller {
         }
 
         $movies = array();
-        $movies = User::findorFail($user_id)->movie->toArray();
+        $movies = User::findorFail($user_id)->movie->sortBy('watched_date')->toArray();
         $viewData['user_id'] = $user_id;
 
         // filter if from date exists
@@ -120,7 +120,7 @@ class MovieController extends Controller {
         $viewData['Title'] = 'Movies By Date Released';
 
         $movies = array();
-        $movies = User::findorFail($user_id)->movie->toArray();
+        $movies = User::findorFail($user_id)->movie->sortBy('watched_date')->toArray();
         $viewData['user_id'] = $user_id;
 
         // filter if from date exists
@@ -151,7 +151,7 @@ class MovieController extends Controller {
         $viewData['Title'] = 'Movies By Director';
 
         $movies = array();
-        $movies = User::findorFail($user_id)->movie->toArray();
+        $movies = User::findorFail($user_id)->movie->sortBy('watched_date')->toArray();
         $viewData['user_id'] = $user_id;
 
         // filter if from date exists
@@ -200,7 +200,7 @@ class MovieController extends Controller {
         $viewData['Title'] = 'Movies By Director';
 
         $movies = array();
-        $movies = User::findorFail($user_id)->movie->toArray();
+        $movies = User::findorFail($user_id)->movie->sortBy('watched_date')->toArray();
         $viewData['user_id'] = $user_id;
 
         // filter if from date exists
