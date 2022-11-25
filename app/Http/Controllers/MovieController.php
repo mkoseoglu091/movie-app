@@ -377,7 +377,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
