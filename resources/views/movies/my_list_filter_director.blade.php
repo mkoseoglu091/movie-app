@@ -18,6 +18,18 @@
         
     </form>
   <h2>Filter Results</h2>
+  
+  @if(count($viewData['director_freq']) > 1)
+  <div class="mb-3">
+    @foreach($viewData['director_freq'] as $key => $value)
+    <form style="float:left;" class="form-inline mb-3 mx-1" action="?" method="POST">
+      @csrf
+      <input class="form-control w-25" name="director" type="hidden" value="{{ $key }}">
+      <button type="submit" class="btn btn-dark" value="{{ $key }}">{{ $key }}</button>
+    </form>
+    @endforeach
+</div>
+  @endif
 </div>
 @forelse($viewData["movies"] as $movie) 
 <div class="card text-white bg-secondary mb-3 mx-3" style="width: 18rem;">

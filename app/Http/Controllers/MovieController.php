@@ -195,6 +195,7 @@ class MovieController extends Controller {
         if(Auth::check()){
             $user_id = Auth::id();
         }
+        $movies = array();
 
         $viewData = array();
         $viewData['Title'] = 'Movies By Director';
@@ -208,6 +209,16 @@ class MovieController extends Controller {
             $filtered = array_filter($movies, function($movie) use($request){ return str_contains(strtolower($movie["director"]), strtolower($request->input('director'))); });
             $movies = $filtered;
         }
+
+        // director options
+        $directors = array();
+
+        foreach ($movies as $m){
+            $directors[] = $m['director'];
+        }
+
+        $director_freq = array_count_values($directors);
+        $viewData['director_freq'] = $director_freq;
 
         $viewData['movies'] = $movies;
 

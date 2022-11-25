@@ -29,3 +29,4 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 1. user_id in routes are no longer needed, carefully remove them
 2. User Delete Option
 3. Change all links to route() for cleaner code
+4. Filter results for all show director options
