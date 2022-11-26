@@ -204,7 +204,12 @@ class MovieController extends Controller {
         }
 
         $director_freq = array_count_values($directors);
-        $viewData['director_freq'] = $director_freq;
+
+        if($request->input('director') !== null){
+            $viewData['director_freq'] = $director_freq;
+        } else {
+            $viewData['director_freq'] = array();
+        }
 
         $viewData['movies'] = $movies;
 
@@ -241,6 +246,12 @@ class MovieController extends Controller {
 
         $director_freq = array_count_values($directors);
         $viewData['director_freq'] = $director_freq;
+
+        if($request->input('director') !== null){
+            $viewData['director_freq'] = $director_freq;
+        } else {
+            $viewData['director_freq'] = array();
+        }
 
         $viewData['movies'] = $movies;
 
