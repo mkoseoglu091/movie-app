@@ -27,5 +27,4 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 
 #### To Do
 1. user_id in routes are no longer needed, carefully remove them
-2. User Delete Option
-3. Change all links to route() for cleaner code
+2. Change all links to route() for cleaner code

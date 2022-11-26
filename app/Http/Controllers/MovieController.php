@@ -574,6 +574,27 @@ class MovieController extends Controller {
         return redirect('/scenes/'.$user_id.'/'.$id)->with('viewData', $viewData);
     }
 
+    function Settings(){
+        $viewData['Title'] = 'User Settings';
+
+        return view('movies.settings')->with('viewData', $viewData);
+    }
+
+    function DeleteUser(){
+        $user_id = Auth::id();
+        User::destroy($user_id);
+        Auth::logout();
+
+        $popularMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        $viewData = array();
+        $viewData['Title'] = 'Now Playing';
+        $viewData['movies'] = $popularMovies;
+
+        //var_dump($popularMovies);
+
+        return redirect('/')->with("viewData",$viewData);
+    }
+
 
 }
 

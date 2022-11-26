@@ -62,6 +62,10 @@ Route::get('/scenes/edit/{user_id}/{id}/{scene_id}', 'App\Http\Controllers\Movie
 Route::post('/scenes/update/{user_id}/{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesUpdate')->name('scene.update')->middleware('auth');
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
+// Delete User
+Route::get('/settings', 'App\Http\Controllers\MovieController@Settings')->middleware('auth');
+Route::get('/delete', 'App\Http\Controllers\MovieController@DeleteUser')->middleware('auth');
+
 Auth::routes();
 
 

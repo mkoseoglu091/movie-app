@@ -10,6 +10,9 @@
         <a class="nav-link" href="/movies/all/1">My List</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/settings">Settings</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
       @endauth
