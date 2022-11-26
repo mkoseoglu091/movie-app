@@ -60,11 +60,12 @@ Route::post('/scenes/save/{id}/', 'App\Http\Controllers\MovieController@ScenesSa
 Route::delete('/scenes/delete/{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesDelete')->middleware('auth');
 Route::get('/scenes/edit/{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesEdit')->middleware('auth');
 Route::post('/scenes/update/s{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesUpdate')->name('scene.update')->middleware('auth');
-Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
-// Delete User
+// User
 Route::get('/settings', 'App\Http\Controllers\MovieController@Settings')->middleware('auth');
 Route::get('/delete', 'App\Http\Controllers\MovieController@DeleteUser')->middleware('auth');
+Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
 
 Auth::routes();
 
