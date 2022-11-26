@@ -7,7 +7,7 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> Watched on: {{ $viewData["movie"]["watched_date"] }}
-        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach
+        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach {{ $viewData["movie"]["rating"] }}
 
         <br>Director: {{ $viewData["movie"]["director"]}}
         <br>
@@ -78,7 +78,7 @@
         <input class="form-check-input" type="checkbox" name="friends">
         @endif
 
-        <input type="submit" value="Add Movie" class="btn btn-dark"> 
+        <input type="submit" value="Edit Movie" class="btn btn-primary"> 
         
     </form>
   </div>

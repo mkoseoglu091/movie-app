@@ -255,7 +255,7 @@ class MovieController extends Controller {
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie;
+        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
         $viewData['user_id'] = $user_id;
 
         return redirect('/movies/all/')->with("viewData",$viewData);
@@ -386,7 +386,7 @@ class MovieController extends Controller {
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie;
+        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
         $viewData['user_id'] = $user_id;
 
         return redirect('/movies/all/')->with("viewData",$viewData);
@@ -484,7 +484,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
@@ -512,7 +512,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
@@ -531,7 +531,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
