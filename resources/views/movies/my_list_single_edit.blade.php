@@ -7,7 +7,7 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> Watched on: {{ $viewData["movie"]["watched_date"] }}
-        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach
+        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach {{ $viewData["movie"]["rating"] }}
 
         <br>Director: {{ $viewData["movie"]["director"]}}
         <br>
@@ -28,7 +28,7 @@
         <p>{{ $viewData["movie"]["comments"] }}</p>
         @endif
 
-        <a href="{{ url('/scenes/'.$viewData['movie']['user_id'].'/'.$viewData['movie']['id']) }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
+        <a href="{{ '/scenes/'.$viewData['movie']['id'] }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
 
         
         <div class="row mx-0 px-0">
@@ -50,7 +50,7 @@
 
   </div>
   <div class="mx-3 mt-5">
-  <form method="POST" action="{{ route('movie.update', ['id' => $viewData['movie']->id, 'user_id' => $viewData['movie']->user_id] )}}">
+  <form method="POST" action="{{ route('movie.update', ['id' => $viewData['movie']->id] )}}">
     @csrf
         <label for="watched_date">When did you watch this movie?</label>
         <input class="form-control" name="watched_date" type="date" value="{{ $viewData['movie']['watched_date'] }}">
@@ -78,7 +78,7 @@
         <input class="form-check-input" type="checkbox" name="friends">
         @endif
 
-        <input type="submit" value="Add Movie" class="btn btn-dark"> 
+        <input type="submit" value="Edit Movie" class="btn btn-primary"> 
         
     </form>
   </div>

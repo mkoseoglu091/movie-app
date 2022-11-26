@@ -7,7 +7,7 @@
     <ul class="navbar-nav me-auto">
       @auth
       <li class="nav-item active">
-        <a class="nav-link" href="/movies/all/1">My List</span></a>
+        <a class="nav-link" href="/movies/all/">My List</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/settings">Settings</a>

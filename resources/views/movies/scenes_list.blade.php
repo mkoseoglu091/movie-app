@@ -8,8 +8,8 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> 
-        <a href="{{ '/movies/'.$viewData['user_id'].'/'.$viewData['movie']['id'] }}" class="btn btn-dark">Return</a>
-        <a href="{{ '/scenes/add/'.$viewData['user_id'].'/'.$viewData['movie']['id'] }}" class="btn btn-dark">Add Scene</a>
+        <a href="{{ '/movies/all/'.$viewData['movie']['id'] }}" class="btn btn-dark">Return</a>
+        <a href="{{ '/scenes/add/'.$viewData['movie']['id'] }}" class="btn btn-dark">Add Scene</a>
         
 
 
@@ -24,9 +24,9 @@
                 <h5 class="card-text">{{ $scene["time"] }}</h5>
                 <p class="mb-1">{{ $scene['comments'] }}</p>
                 <br>
-                <a href="{{ '/scenes/edit/'.$viewData['user_id'].'/'.$viewData['movie']['id'].'/'.$scene['id'] }}" class="btn btn-primary">Edit</a>
+                <a href="{{ '/scenes/edit/'.$viewData['movie']['id'].'/'.$scene['id'] }}" class="btn btn-primary">Edit</a>
                 
-                <form class="" style="float:right;" action = "{{ url('/scenes/delete/'.$viewData['movie']['user_id'].'/'.$viewData['movie']['id']).'/'.$scene['id'] }}" method="POST">
+                <form class="" style="float:right;" action = "{{ '/scenes/delete/'.$viewData['movie']['id'].'/'.$scene['id'] }}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button style="float:right;" class="btn btn-danger">Delete</button>

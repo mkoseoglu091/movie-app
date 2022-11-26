@@ -7,7 +7,7 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> Watched on: {{ $viewData["movie"]["watched_date"] }}
-        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach
+        <br><t>My Rating: @foreach(range(1, $viewData["movie"]["rating"]) as $x) &#11088; @endforeach {{ $viewData["movie"]["rating"] }}
 
         <br>Director: {{ $viewData["movie"]["director"]}}
         <br>
@@ -27,7 +27,7 @@
         <p>{{ $viewData["movie"]["comments"] }}</p>
         @endif
 
-        <a href="{{ url('/scenes/'.$viewData['movie']['user_id'].'/'.$viewData['movie']['id']) }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
+        <a href="{{ '/scenes/'.$viewData['movie']['id'] }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
 
         
         <div class="row mx-0 px-0">
@@ -43,9 +43,9 @@
 
         
     </p>
-    <a href="{{ url('/movies/edit/'.$viewData['movie']['user_id'].'/'.$viewData['id']) }}" style="float:left;" class="btn btn-primary">Edit</a>
+    <a href="{{ '/movies/edit/'.$viewData['id'] }}" style="float:left;" class="btn btn-primary">Edit</a>
     
-    <form class="mx-3" style="float:left;" action = "{{ url('/movies/delete/'.$viewData['movie']['user_id'].'/'.$viewData['movie']['id']) }}" method="POST">
+    <form class="mx-3" style="float:left;" action = "{{ '/movies/delete/'.$viewData['movie']['id'] }}" method="POST">
       @csrf
       @method('DELETE')
       <button class="btn btn-danger">Delete</button>

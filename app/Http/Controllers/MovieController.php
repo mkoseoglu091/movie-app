@@ -57,11 +57,9 @@ class MovieController extends Controller {
         return view('movies.search_movies_by_id')->with("viewData",$viewData);
     }
 
-    function AllMovies($user_id) {
+    function AllMovies() {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         //Initialize View data
         $viewData = array();
@@ -75,18 +73,12 @@ class MovieController extends Controller {
     }
 
 
-    function FilterMoviesWatched(Request $request, $user_id) {
+    function FilterMoviesWatched(Request $request) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $viewData = array();
         $viewData['Title'] = 'Movies By Date Watched';
-
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
 
         $movies = array();
         $movies = User::findorFail($user_id)->movie->sortBy('watched_date')->toArray();
@@ -110,11 +102,9 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
-    function FilterMoviesReleased(Request $request, $user_id) {
+    function FilterMoviesReleased(Request $request) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $viewData = array();
         $viewData['Title'] = 'Movies By Date Released';
@@ -141,11 +131,9 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
-    function FilterMoviesAll(Request $request, $user_id) {
+    function FilterMoviesAll(Request $request) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $viewData = array();
         $viewData['Title'] = 'Movies By Director';
@@ -217,11 +205,10 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
-    function FilterMoviesDirector(Request $request, $user_id) {
+    function FilterMoviesDirector(Request $request) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
+
         $movies = array();
 
         $viewData = array();
@@ -259,28 +246,24 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
-    function DeleteMovie($user_id, $id) {
+    function DeleteMovie($id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         Movie::destroy($id);
 
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie;
+        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
         $viewData['user_id'] = $user_id;
 
-        return redirect('/movies/all/'.$user_id)->with("viewData",$viewData);
+        return redirect('/movies/all/')->with("viewData",$viewData);
     }
 
-    function SingleMovie($user_id, $id)  {
+    function SingleMovie($id)  {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         //Grab the course from the database
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
@@ -302,11 +285,9 @@ class MovieController extends Controller {
             ->with('viewData',$viewData);
     }
 
-    function EditMovie($user_id, $id)  {
+    function EditMovie($id)  {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         //Grab the course from the database
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
@@ -363,7 +344,7 @@ class MovieController extends Controller {
         ]);
 
         $newMovie = new Movie();
-        $newMovie->user_id = Auth::check() ? Auth::id() : $request->input('user_id');
+        $newMovie->user_id = Auth::id();
         $newMovie->tmdb_id = $request->input('tmdb_id');
         $newMovie->title = $request->input('title');
         $newMovie->image = $request->input('image');
@@ -383,11 +364,9 @@ class MovieController extends Controller {
         return back()->with('message', 'Success!!');
     }
 
-    function UpdateMovie(Request $request, $user_id, $id) {
+    function UpdateMovie(Request $request, $id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
     
         $request->validate([
             "watched_date" => "required",
@@ -407,17 +386,15 @@ class MovieController extends Controller {
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie;
+        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
         $viewData['user_id'] = $user_id;
 
-        return redirect('/movies/all/'.$user_id)->with("viewData",$viewData);
+        return redirect('/movies/all/')->with("viewData",$viewData);
     }
 
-    function ScenesList($user_id, $id) {
+    function ScenesList($id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
@@ -431,11 +408,9 @@ class MovieController extends Controller {
         return view('movies.scenes_list')->with('viewData', $viewData);
     }
 
-    function ScenesAdd($user_id, $id) {
+    function ScenesAdd($id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
 
@@ -447,11 +422,9 @@ class MovieController extends Controller {
 
     }
 
-    function ScenesEdit($user_id, $id, $scene_id) {
+    function ScenesEdit($id, $scene_id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $scene = Scene::findorFail($scene_id);
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
@@ -469,11 +442,9 @@ class MovieController extends Controller {
 
     }
     
-    function ScenesSave(Request $request, $user_id, $id) {
+    function ScenesSave(Request $request, $id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $request->validate([
             "file" => "mimes:jpeg,png,jpg|max:50",
@@ -513,7 +484,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
@@ -523,11 +494,9 @@ class MovieController extends Controller {
         return view('movies.scenes_list')->with('viewData', $viewData);
     }
 
-    function ScenesUpdate(Request $request, $user_id, $id, $scene_id) {
+    function ScenesUpdate(Request $request, $id, $scene_id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         $scene = Scene::findorFail($scene_id);
 
@@ -543,7 +512,7 @@ class MovieController extends Controller {
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
@@ -554,24 +523,22 @@ class MovieController extends Controller {
     }
 
 
-    function ScenesDelete($user_id, $id, $scene_id) {
+    function ScenesDelete($id, $scene_id) {
 
-        if(Auth::check()){
-            $user_id = Auth::id();
-        }
+        $user_id = Auth::id();
 
         Scene::destroy($scene_id);
 
         $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
         $scenes = array();
-        $scenes = $movie->scene;
+        $scenes = $movie->scene->sortBy('time');
 
         $viewData['Title'] = 'Saved Scenes';
         $viewData['movie'] = $movie;
         $viewData['scenes'] = $scenes;
         $viewData['user_id'] = $user_id;
         
-        return redirect('/scenes/'.$user_id.'/'.$id)->with('viewData', $viewData);
+        return redirect('/scenes/'.$id)->with('viewData', $viewData);
     }
 
     function Settings(){

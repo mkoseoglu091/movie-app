@@ -5,7 +5,7 @@
 <div class="row mx-0 px-0">
 <h2>{{ $viewData["Title"] }}</h2>
 <div class="mb-3">
-<a href="{{ '/movies/all/'.$viewData['user_id'] }}" class="btn btn-danger">Reset Filters</a>
+<a href="{{ '/movies/all/' }}" class="btn btn-danger">Reset Filters</a>
 </div>
 <div>
 <form method="POST" action="?">
@@ -29,7 +29,7 @@
     <div class="card-body">
     <h5 class="card-title">{{ $movie["title"] }}</h5>
     <p class="card-text">Watched on: {{ $movie["watched_date"] }}</p>
-    <a href="{{ url('/movies/'.$viewData['user_id'].'/'.$movie['id']) }}" class="btn btn-dark">Details</a>
+    <a href="{{ url('/movies/all/'.$movie['id']) }}" class="btn btn-dark">Details</a>
   </div>
 </div>
 @empty
