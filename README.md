@@ -29,4 +29,6 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 1. Change all links to route() for cleaner code
 
 ## ngrok serve
-php artisan ngrok --port=8000
+php artisan serve
+open ngrok.exe
+ngrok http 8000
