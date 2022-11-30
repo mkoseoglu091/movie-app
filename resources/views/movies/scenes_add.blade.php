@@ -9,7 +9,7 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> 
-    <a href="{{ '/scenes/'.$viewData['movie']['id'] }}" class="btn btn-dark">Back</a>
+    <a href="{{ route('scenes.list', $viewData['movie']['id']) }}" class="btn btn-dark">Back</a>
 
     <form method="POST" action="{{ route('scene.save', ['id' => $viewData['movie']->id]) }}" enctype="multipart/form-data">
     @csrf

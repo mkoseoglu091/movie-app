@@ -8,8 +8,8 @@
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> 
-        <a href="{{ '/movies/all/'.$viewData['movie']['id'] }}" class="btn btn-dark">Return</a>
-        <a href="{{ '/scenes/add/'.$viewData['movie']['id'] }}" class="btn btn-dark">Add Scene</a>
+        <a href="{{ route('myList.single', $viewData['movie']['id']) }}" class="btn btn-dark">Return</a>
+        <a href="{{ route('scene.add', $viewData['movie']['id']) }}" class="btn btn-dark">Add Scene</a>
         
 
 
@@ -17,16 +17,14 @@
         @forelse($viewData["scenes"] as $scene) 
         <div class="card text-white bg-secondary mx-1 mb-1" style="width: 16rem;">
 
-        
-
             <img class="card-img-top mt-3" src="{{ $scene['screenshot'] != '' ? 'data:image/'.$scene['extension'].';base64, '.$scene['screenshot'] : '/scene.jpg' }}" alt="Scene Screenshot">  
             <div class="card-body">
                 <h5 class="card-text">{{ $scene["time"] }}</h5>
                 <p class="mb-1">{{ $scene['comments'] }}</p>
                 <br>
-                <a href="{{ '/scenes/edit/'.$viewData['movie']['id'].'/'.$scene['id'] }}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('scene.edit', ['id'=>$viewData['movie']['id'], 'scene_id'=>$scene['id'] ]) }}" class="btn btn-primary">Edit</a>
                 
-                <form class="" style="float:right;" action = "{{ '/scenes/delete/'.$viewData['movie']['id'].'/'.$scene['id'] }}" method="POST">
+                <form class="" style="float:right;" action = "{{ route('scene.delete', ['id'=>$viewData['movie']['id'], 'scene_id'=>$scene['id'] ]) }}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button style="float:right;" class="btn btn-danger">Delete</button>
