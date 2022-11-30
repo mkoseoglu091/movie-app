@@ -29,3 +29,7 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 php artisan serve
 open ngrok.exe
 ngrok http 8000
+
+## ToDo
+1. In settings, add a way to import movie data directly from csv file
+2. Optimize site for mobile
