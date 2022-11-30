@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-  <a class="navbar-brand mx-3" href="/">Home</a>
+  <a class="navbar-brand mx-3" href="{{ route('home') }}">Home</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,13 +7,13 @@
     <ul class="navbar-nav me-auto">
       @auth
       <li class="nav-item active">
-        <a class="nav-link" href="/movies/all/">My List</span></a>
+        <a class="nav-link" href="{{ route('myList') }}">My List</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/settings">Settings</a>
+        <a class="nav-link" href="{{ route('settings') }}">Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
       </li>
       @endauth
       @guest
