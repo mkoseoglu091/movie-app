@@ -20,7 +20,7 @@
     <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w500/{{ $movie['poster_path'] }}" alt="Movie Poster">  
     <div class="card-body">
     <h5 class="card-title">{{ $movie["title"] }}</h5>
-    <a href="/movies/{{ $movie['id'] }}" class="btn btn-dark">Details</a>
+    <a href="{{ route('single', $movie['id']) }}" class="btn btn-dark">Details</a>
   </div>
 </div>
 @endforeach

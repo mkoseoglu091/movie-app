@@ -6,7 +6,7 @@
 <h2>{{ $viewData["Title"] }}</h2>
 <p>Would you like to delete this user?</p>
 <div>
-<a href="/delete" class="btn btn-danger">DELETE</a>
+<a href="{{ route('user.delete') }}" class="btn btn-danger">DELETE</a>
 </div>
 </div>
 @include('partials.footer')

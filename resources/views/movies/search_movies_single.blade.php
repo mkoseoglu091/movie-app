@@ -38,7 +38,7 @@
   </div>
   @auth
   <div class="mx-3 mt-5">
-  <form method="POST" action="/movies/add">
+  <form method="POST" action="{{ route('movie.save') }}">
     @csrf
         <label for="watched_date">When did you watch this movie?</label>
         <input class="form-control" name="watched_date" type="date">

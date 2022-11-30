@@ -22,7 +22,7 @@
     <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w500/{{ $viewData['movie']['poster_path'] }}" alt="Movie Poster">  
     <div class="card-body">
     <h5 class="card-title">{{ $viewData["movie"]["title"] }}</h5>
-    <a href="/movies/{{ $viewData['movie']['id'] }}" class="btn btn-dark">Details</a>
+    <a href="{{ route('single', $viewData['movie']['id']) }}" class="btn btn-dark">Details</a>
   </div>
 </div>
 
