@@ -30,6 +30,7 @@ class MovieController extends Controller {
         return view('movies.home_page')->with("viewData",$viewData);
     }
 
+    // search for a movie
     function search(Request $request) {
         $movie = $request->input('search');
         $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$movie)->json();
@@ -40,6 +41,7 @@ class MovieController extends Controller {
         return view('movies.search_movies')->with("viewData",$viewData);
     }
 
+    // search by tmdb id
     function searchtmdb(Request $request) {
         $movie = $request->input('search');
         $viewData['movies'] = array();
@@ -57,6 +59,7 @@ class MovieController extends Controller {
         return view('movies.search_movies_by_id')->with("viewData",$viewData);
     }
 
+    // The movies belonging to user (my List)
     function AllMovies() {
 
         $user_id = Auth::id();
@@ -72,7 +75,7 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
-
+    // Filter by Watched Date
     function FilterMoviesWatched(Request $request) {
 
         $user_id = Auth::id();
@@ -102,6 +105,7 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
+    // Filter by Release Date
     function FilterMoviesReleased(Request $request) {
 
         $user_id = Auth::id();
@@ -131,6 +135,7 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
+    // Filter by All filters
     function FilterMoviesAll(Request $request) {
 
         $user_id = Auth::id();
@@ -205,6 +210,7 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
+    // Filter by Director
     function FilterMoviesDirector(Request $request) {
 
         $user_id = Auth::id();
@@ -246,21 +252,14 @@ class MovieController extends Controller {
             ->with("viewData",$viewData);
     }
 
+    // Delete Movie from MyList
     function DeleteMovie($id) {
-
-        $user_id = Auth::id();
-
         Movie::destroy($id);
 
-        $viewData = array();
-        $viewData['Title'] = 'Watched Movies';
-        //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
-        $viewData['user_id'] = $user_id;
-
-        return redirect('/movies/all/')->with("viewData",$viewData);
+        return redirect()->route('myList');
     }
 
+    // show details of a single movie from myList
     function SingleMovie($id)  {
 
         $user_id = Auth::id();
@@ -285,6 +284,7 @@ class MovieController extends Controller {
             ->with('viewData',$viewData);
     }
 
+    // Edit Movie details of a movie from myList
     function EditMovie($id)  {
 
         $user_id = Auth::id();
@@ -310,6 +310,7 @@ class MovieController extends Controller {
             ->with('viewData',$viewData);
     }
 
+    // movie details of a movie that has not been added yet
     function ShowMovie($id){
         $movie = Http::get('https://api.themoviedb.org/3/movie/'.$id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
         $credits = Http::get('https://api.themoviedb.org/3/movie/'.$id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
@@ -334,6 +335,7 @@ class MovieController extends Controller {
         return view('movies.search_movies_single')->with('viewData', $viewData);
     }
 
+    // add a new movie to myList
     function AddMovie(Request $request){
 
         // validate request
@@ -364,6 +366,7 @@ class MovieController extends Controller {
         return back()->with('message', 'Success!!');
     }
 
+    // update movie thats already in myList
     function UpdateMovie(Request $request, $id) {
 
         $user_id = Auth::id();
@@ -382,16 +385,10 @@ class MovieController extends Controller {
 
         $newMovie->save();
 
-        // return to all movies
-        $viewData = array();
-        $viewData['Title'] = 'Watched Movies';
-        //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
-        $viewData['user_id'] = $user_id;
-
-        return redirect('/movies/all/')->with("viewData",$viewData);
+        return redirect()->route('myList.single', $id);
     }
 
+    // View list of saved scenes
     function ScenesList($id) {
 
         $user_id = Auth::id();
@@ -408,6 +405,7 @@ class MovieController extends Controller {
         return view('movies.scenes_list')->with('viewData', $viewData);
     }
 
+    // Scene add form
     function ScenesAdd($id) {
 
         $user_id = Auth::id();
@@ -422,6 +420,7 @@ class MovieController extends Controller {
 
     }
 
+    // Scene edit form
     function ScenesEdit($id, $scene_id) {
 
         $user_id = Auth::id();
@@ -442,6 +441,7 @@ class MovieController extends Controller {
 
     }
     
+    // save added scene after form
     function ScenesSave(Request $request, $id) {
 
         $user_id = Auth::id();
@@ -480,24 +480,11 @@ class MovieController extends Controller {
         
         $scene->save();
 
-        // return to all scenes
-
-        $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
-        $scenes = array();
-        $scenes = $movie->scene->sortBy('time');
-
-        $viewData['Title'] = 'Saved Scenes';
-        $viewData['movie'] = $movie;
-        $viewData['scenes'] = $scenes;
-        $viewData['user_id'] = $user_id;
-        
-        return view('movies.scenes_list')->with('viewData', $viewData);
+        return redirect()->route('scenes.list', $id);
     }
 
+    // update scene details
     function ScenesUpdate(Request $request, $id, $scene_id) {
-
-        $user_id = Auth::id();
-
         $scene = Scene::findorFail($scene_id);
 
         $scene->comments = $request->input('comments') ? $request->input('comments') : '';
@@ -508,58 +495,31 @@ class MovieController extends Controller {
         
         $scene->save();
 
-        // return to all scenes
-
-        $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
-        $scenes = array();
-        $scenes = $movie->scene->sortBy('time');
-
-        $viewData['Title'] = 'Saved Scenes';
-        $viewData['movie'] = $movie;
-        $viewData['scenes'] = $scenes;
-        $viewData['user_id'] = $user_id;
-        
-        return view('movies.scenes_list')->with('viewData', $viewData);
+        return redirect()->route('scenes.list', $id);
     }
 
-
+    // delete scene
     function ScenesDelete($id, $scene_id) {
-
-        $user_id = Auth::id();
-
         Scene::destroy($scene_id);
 
-        $movie = Movie::where('user_id', '=', $user_id)->where('id', '=', $id)->firstorFail();
-        $scenes = array();
-        $scenes = $movie->scene->sortBy('time');
-
-        $viewData['Title'] = 'Saved Scenes';
-        $viewData['movie'] = $movie;
-        $viewData['scenes'] = $scenes;
-        $viewData['user_id'] = $user_id;
-        
-        return redirect('/scenes/'.$id)->with('viewData', $viewData);
+        return redirect()->route('scenes.list', $id);
     }
 
+    // show settings page
     function Settings(){
         $viewData['Title'] = 'User Settings';
 
         return view('movies.settings')->with('viewData', $viewData);
     }
 
+    // delete user
     function DeleteUser(){
         $user_id = Auth::id();
         User::destroy($user_id);
         Auth::logout();
 
-        $popularMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-        $viewData = array();
-        $viewData['Title'] = 'Now Playing';
-        $viewData['movies'] = $popularMovies;
+        return redirect()->route('home');
 
-        //var_dump($popularMovies);
-
-        return redirect('/')->with("viewData",$viewData);
     }
 
 
