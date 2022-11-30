@@ -28,7 +28,7 @@
         <p>{{ $viewData["movie"]["comments"] }}</p>
         @endif
 
-        <a href="{{ '/scenes/'.$viewData['movie']['id'] }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
+        <a href="{{ route('scenes.list', $viewData['movie']['id']) }} " class="btn btn-dark mb-3 mt-3">Saved Scenes</a>
 
         
         <div class="row mx-0 px-0">

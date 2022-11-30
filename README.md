@@ -25,9 +25,6 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 6. The movies that you add will appear in 'My List', you can delete or edit these movies.
 7. php artisan route:list to see all routes
 
-#### To Do
-1. Change all links to route() for cleaner code
-
 ## ngrok serve
 php artisan serve
 open ngrok.exe

@@ -6,10 +6,10 @@
 <h2>{{ $viewData["Title"] }}</h2>
 <div class="mb-3">
 <p class="d-inline">Filter By: </p>
-<a href="{{ '/movies/filter/1/' }}" class="btn btn-dark">Date Watched</a>
-<a href="{{ '/movies/filter/2/' }}" class="btn btn-dark">Date Released</a>
-<a href="{{ '/movies/filter/3/' }}" class="btn btn-dark">Director</a>
-<a href="{{ '/movies/filter/4/' }}" class="btn btn-dark">All</a>
+<a href="{{ route('getFilterWatched') }}" class="btn btn-dark">Date Watched</a>
+<a href="{{ route('getFilterReleased') }}" class="btn btn-dark">Date Released</a>
+<a href="{{ route('getFilterDirector') }}" class="btn btn-dark">Director</a>
+<a href="{{ route('getFilterAll') }}" class="btn btn-dark">All</a>
 
 
 </div>
@@ -19,7 +19,7 @@
     <div class="card-body">
     <h5 class="card-title">{{ $movie["title"] }}</h5>
     <p class="card-text">Watched on: {{ $movie["watched_date"] }}</p>
-    <a href="{{ url('/movies/all/'.$movie['id']) }}" class="btn btn-dark">Details</a>
+    <a href="{{ route('myList.single', $movie['id']) }}" class="btn btn-dark">Details</a>
   </div>
 </div>
 @empty
