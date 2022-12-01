@@ -349,7 +349,7 @@ class MovieController extends Controller {
         $newMovie->user_id = Auth::id();
         $newMovie->tmdb_id = $request->input('tmdb_id');
         $newMovie->title = $request->input('title');
-        $newMovie->image = $request->input('image');
+        $newMovie->image = $request->input('image') ? $request->input('image') : '';
         $newMovie->release_date = $request->input('release_date');
         $newMovie->genre = $request->input('genre');
         $newMovie->director = $request->input('director');
@@ -527,6 +527,8 @@ class MovieController extends Controller {
 
         $user_id = Auth::id();
 
+        ini_set('max_execution_time', 600);
+
         $request->validate([
             "file" => "mimes:csv",
         ]);
@@ -534,6 +536,7 @@ class MovieController extends Controller {
         // csv
         if($request->hasFile('file')){
                 $path = $request->file('file')->getRealPath();
+                $message = "Success...The following movies were not found: <br>";
                 // $extension = $request->file('file')->extension();
 
                 if (($open = fopen($path, "r")) !== FALSE) {
@@ -541,11 +544,14 @@ class MovieController extends Controller {
                     while (($data = fgetcsv($open, 1000, ",")) !== FALSE) {
                         $watched_date = date('Y-m-d', strtotime($data[0]));
                         $title = $data[1];
-                        $cinema = $data[2] == "TRUE" ? true : false;
-                        $friends = $data[3] == "FALSE" ? true : false;
-                        if(trim($title) != ""){
+                        $cinema = strtoupper($data[2]) == "TRUE" ? true : false;
+                        $friends = strtoupper($data[3]) == "TRUE" ? false : true; // sinan thought of this as alone: true/false, I thought of it as withFriends: true/false so its the opposite
+                        if(trim($title) != "" && strtotime($watched_date)){
                             $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$title)->json()['results'];
                             if (count($foundMovies) == 0){
+                                $message .= '- ';
+                                $message .= $title;
+                                $message .= '<br>';
                                 continue;
                             } else {
                                 $foundMovie = $foundMovies[0];
@@ -566,7 +572,7 @@ class MovieController extends Controller {
                             $newMovie->user_id = $user_id;
                             $newMovie->tmdb_id = $movie['id'];
                             $newMovie->title = $movie['title'];
-                            $newMovie->image = $movie['poster_path'];
+                            $newMovie->image = $movie['poster_path'] ? $movie['poster_path'] : '';
                             $newMovie->release_date = $movie['release_date'];;
                             $newMovie->genre = implode('|', array_map(function($x) {return $x['name'];}, $movie['genres']));
                             $newMovie->director = $director;
@@ -584,7 +590,9 @@ class MovieController extends Controller {
                     fclose($open);
                 }
         }
-        return back()->with('message', 'Success!!');
+        $message .= '<br>Please double check the added movies. The app adds the first movie found with provided title as keyword...';
+        //ini_set('max_execution_time', 60);
+        return back()->with('message', $message);
     }
 
 

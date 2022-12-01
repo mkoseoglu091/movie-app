@@ -61,7 +61,7 @@
         <input type="hidden" name="tmdb_id" value="{{ $viewData['movie']['id'] }}">
         <input type="hidden" name="user_id" value="1">
         <input type="hidden" name="title" value="{{ $viewData['movie']['title'] }}">
-        <input type="hidden" name="image" value="{{ $viewData['movie']['poster_path'] }}">
+        <input type="hidden" name="image" value="{{ $viewData['movie']['poster_path'] ? $viewData['movie']['poster_path'] : '' }}">
         <input type="hidden" name="tmdb_rating" value="{{ $viewData['movie']['vote_average'] }}">
 
         <input type="hidden" name="release_date" value="{{ $viewData['movie']['release_date'] }}">

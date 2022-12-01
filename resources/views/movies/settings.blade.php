@@ -4,7 +4,7 @@
 @include('partials.error')
 @if(session()->has('message'))
     <div class="alert alert-success">
-        {{ session()->get('message') }}
+        {!! session()->get('message') !!}
     </div>
 @endif
 
@@ -17,7 +17,7 @@
     <div>
     <br>
     <h3>Import</h3>
-        <p>You can import movies from a CSV file, the expected format is: <br>Date(YYYY-MM-DD), Title, Watched in Cinemas(TRUE / FALSE), Watched Alone (TRUE / FALSE)</p>
+        <p>You can import movies from a CSV file, the expected format is: <br>Date(YYYY-MM-DD), Title, Watched in Cinemas(TRUE / FALSE), Watched Alone (TRUE / FALSE)<br>Example: 2021-01-01, Die Hard, TRUE, FALSE<br>IMPORTANT: This may take a while depending on how many lines your CSV has. 365 lines takes about 3 minutes</p>
         <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
         @csrf
         <label class="form-label" for="chooseFile">Select CSV file: </label>
