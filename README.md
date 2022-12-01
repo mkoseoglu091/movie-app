@@ -9,7 +9,7 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 4. PHP
 
 ## Installation
-1. The database needs to be created, make sure MySQL is installed and running. On the terminal type "mysql -u root -p", then type "create database project;" to create  the project.
+1. The database needs to be created, make sure MySQL is installed and running. On the terminal type "mysql -u root -p", then type "create database movie_app;" to create  the project.
 2. Make sure composer is installed. Inside the project file run "composer install" to get the vendor folder back inside the project.
 3. Run "php artisan migrate" so the required database tables are created.
 4. Run "npm install"
