@@ -25,7 +25,7 @@
 </div>
 @forelse($viewData["movies"] as $movie) 
 <div class="card text-white bg-secondary mb-3 mx-3" style="width: 18rem;">
-    <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w500/{{ $movie['image'] }}" alt="Movie Poster">  
+    <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w300/{{ $movie['image'] }}" alt="Movie Poster">  
     <div class="card-body">
     <h5 class="card-title">{{ $movie["title"] }}</h5>
     <p class="card-text">Watched on: {{ $movie["watched_date"] }}</p>

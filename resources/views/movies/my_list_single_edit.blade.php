@@ -3,7 +3,7 @@
 @include('partials.navbar')
 
 <div class="card flex-row mx-3 bg-light">
-  <img style="width:30%; height:100%;" class="card-img-lg-left img-responsive img-fluid mx-3 mb-3 mt-3" src="https://image.tmdb.org/t/p/w500/{{ $viewData['movie']['image'] }}" alt="Movie Poster"/>
+  <img style="width:30%; height:100%;" class="card-img-lg-left img-responsive img-fluid mx-3 mb-3 mt-3" src="https://image.tmdb.org/t/p/w300/{{ $viewData['movie']['image'] }}" alt="Movie Poster"/>
   <div class="card-body">
   <h5 class="card-title h1 h2-sm"> {{ $viewData["movie"]["title"] }}</h5>
     <p class="card-text"> Watched on: {{ $viewData["movie"]["watched_date"] }}
@@ -34,7 +34,7 @@
         <div class="row mx-0 px-0">
         @foreach($viewData["actors"] as $actor) 
         <div class="card text-white bg-secondary mx-1 mb-1" style="width: 10rem;">
-            <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w500/{{ $actor['profile_path'] }}" alt="Actor Photo">  
+            <img class="card-img-top mt-3" src="https://image.tmdb.org/t/p/w300/{{ $actor['profile_path'] }}" alt="Actor Photo">  
             <div class="card-body">
                 <h5 class="card-text">{{ $actor["name"] }}</h5>
             </div>

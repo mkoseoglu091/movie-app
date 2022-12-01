@@ -4,7 +4,7 @@
 // API key = 7fcfa4a3af3449014f16b1ff41de256e
 // get title of movie, add to query, API will return an array of movies, either grab first one, or show all for user to add
 // fetch required info, ask user for rest of info, add to database
-// to grab poster path: https://image.tmdb.org/t/p/w500/   +   poster path (RYMX2wcKCBAr24UyPD7xwmjaTn.jpg)
+// to grab poster path: https://image.tmdb.org/t/p/w300/   +   poster path (RYMX2wcKCBAr24UyPD7xwmjaTn.jpg)
 
 namespace App\Http\Controllers;
 
@@ -520,6 +520,71 @@ class MovieController extends Controller {
 
         return redirect()->route('home');
 
+    }
+
+    // import movie data from csv
+    function Import(Request $request) {
+
+        $user_id = Auth::id();
+
+        $request->validate([
+            "file" => "mimes:csv",
+        ]);
+
+        // csv
+        if($request->hasFile('file')){
+                $path = $request->file('file')->getRealPath();
+                // $extension = $request->file('file')->extension();
+
+                if (($open = fopen($path, "r")) !== FALSE) {
+
+                    while (($data = fgetcsv($open, 1000, ",")) !== FALSE) {
+                        $watched_date = date('Y-m-d', strtotime($data[0]));
+                        $title = $data[1];
+                        $cinema = $data[2] == "TRUE" ? true : false;
+                        $friends = $data[3] == "FALSE" ? true : false;
+                        if(trim($title) != ""){
+                            $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$title)->json()['results'];
+                            if (count($foundMovies) == 0){
+                                continue;
+                            } else {
+                                $foundMovie = $foundMovies[0];
+                            }
+                            $movie = Http::get('https://api.themoviedb.org/3/movie/'.$foundMovie['id'].'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+                            $credits = Http::get('https://api.themoviedb.org/3/movie/'.$foundMovie['id'].'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+                            
+                            $crew = $credits["crew"];
+
+                            foreach($crew as $c){
+                                if($c["job"] === "Director"){
+                                    $director = $c["name"];
+                                }
+                            }
+
+
+                            $newMovie = new Movie();
+                            $newMovie->user_id = $user_id;
+                            $newMovie->tmdb_id = $movie['id'];
+                            $newMovie->title = $movie['title'];
+                            $newMovie->image = $movie['poster_path'];
+                            $newMovie->release_date = $movie['release_date'];;
+                            $newMovie->genre = implode('|', array_map(function($x) {return $x['name'];}, $movie['genres']));
+                            $newMovie->director = $director;
+                            $newMovie->actors = ''; // can be gathered from tmdb_id if required
+                            $newMovie->watched_date = $watched_date;
+                            $newMovie->rating = 5;
+                            $newMovie->comments = '';
+                            $newMovie->tmdb_rating = $movie['vote_average'];
+                            $newMovie->cinema = $cinema;
+                            $newMovie->friends = $friends;
+
+                            $newMovie->save();
+                        }
+                    }
+                    fclose($open);
+                }
+        }
+        return back()->with('message', 'Success!!');
     }
 
 

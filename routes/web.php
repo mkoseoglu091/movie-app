@@ -65,7 +65,7 @@ Route::post('/scenes/update/s{id}/{scene_id}', 'App\Http\Controllers\MovieContro
 Route::get('/settings', 'App\Http\Controllers\MovieController@Settings')->name('settings')->middleware('auth');
 Route::get('/delete', 'App\Http\Controllers\MovieController@DeleteUser')->name('user.delete')->middleware('auth');
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-
+Route::post('/import', 'App\Http\Controllers\MovieController@Import')->name('import')->middleware('auth');
 
 Auth::routes();
 
