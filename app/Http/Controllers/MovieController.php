@@ -536,7 +536,8 @@ class MovieController extends Controller {
         // csv
         if($request->hasFile('file')){
                 $path = $request->file('file')->getRealPath();
-                $message = "Success...The following movies were not found: <br>";
+                $message = "Success...<br>";
+                $notAdded = 0;
                 // $extension = $request->file('file')->extension();
 
                 if (($open = fopen($path, "r")) !== FALSE) {
@@ -549,9 +550,13 @@ class MovieController extends Controller {
                         if(trim($title) != "" && strtotime($watched_date)){
                             $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$title)->json()['results'];
                             if (count($foundMovies) == 0){
+                                if ($notAdded == 0){
+                                    $message .= "The following movies were not found: <br>";
+                                }
                                 $message .= '- ';
                                 $message .= $title;
                                 $message .= '<br>';
+                                $notAdded += 1;
                                 continue;
                             } else {
                                 $foundMovie = $foundMovies[0];
