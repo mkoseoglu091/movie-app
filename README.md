@@ -9,9 +9,9 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 4. PHP
 
 ## Installation
-1. The database needs to be created, make sure MySQL is installed and running. On the terminal type "mysql -u root -p", then type "create database movie_app;" to create  the project.
+1. Make sure Xampp mysql is running
 2. Make sure composer is installed. Inside the project file run "composer install" to get the vendor folder back inside the project.
-3. Run "php artisan migrate" so the required database tables are created.
+3. Run "php artisan migrate" so the required database tables are created. If it asks to create database answer "yes"
 4. Run "npm install"
 5. Run "npm run build"
 6. You are ready to run the app, type "php artisan serve" to run the application. Copy the address that was outputted in the terminal to your browser and enjoy.
@@ -23,7 +23,12 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 4. After searching for a movie, if you are unable to see the movie you are looking for, you can use the movies TMDB ID to make a more detailed search (The app only shows the top 20 movies, so it is possible to not find the movie you are looking for. In that case go on TMDB, search again, and make a note of the ID)
 5. Once you find the movie you are looking for, you can add that movie to your own list, but you need to provide a date watched. You can also provide a rating out of 10 and any comments.
 6. The movies that you add will appear in 'My List', you can delete or edit these movies.
-7. php artisan route:list to see all routes
+7. Added movies can be filtered by watch date, release date and director, or a combination of all.
+8. Scenes can be added, edited, deleted. Images can be added to scenes but they have to be 50KB or less.
+9. From Settings, a CSV file of movies can be imported. The format has to be as follows:
+YYYY-MM-DD, Title, (True/False) watched in Cinemas?, (True/False) watched with friends?
+10. Can login or register in order to access most features. Logged in users can delete their account through settings.
+11. php artisan route:list to see all routes
 
 ## ngrok serve
 php artisan serve
@@ -31,5 +36,5 @@ open ngrok.exe
 ngrok http 8000
 
 ## ToDo
-1. In settings, add a way to import movie data directly from csv file
-2. Optimize site for mobile
+1. Optimize site for mobile
+2. Image thumbnailing for scenes to allow users to upload images larger than 50KB
