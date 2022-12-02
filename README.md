@@ -12,11 +12,13 @@ This is a web application developed for CSIS-3280 Web Based Scripting offered by
 1. Make sure Xampp mysql is running
 2. Make sure composer is installed. Inside the project file run "composer install" to get the vendor folder back inside the project.
 3. Run "php artisan migrate" so the required database tables are created. If it asks to create database answer "yes"
-4. Run "npm install"
+4. Run "npm install" to install node_modules
 5. Run "npm run build"
 6. You are ready to run the app, type "php artisan serve" to run the application. Copy the address that was outputted in the terminal to your browser and enjoy.
 
 ## How to Use
+Detailed User Manual Can be found under the docs folder, along with quickstart instructions to get some data into the database, demo files for importing and scene screenshots, UML diagram and video link to a video presentation that goes through the features of the application.
+
 1. To view the movies you have watched click on my list
 2. Home page shows the movies that are currently playing on cinemas
 3. You can search for a movie using the search bar
@@ -31,6 +33,7 @@ YYYY-MM-DD, Title, (True/False) watched in Cinemas?, (True/False) watched with f
 11. php artisan route:list to see all routes
 
 ## ngrok serve
+
 php artisan serve
 open ngrok.exe
 ngrok http 8000

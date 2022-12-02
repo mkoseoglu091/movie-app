@@ -1,2 +1,0 @@
-USE movie_app;
-
