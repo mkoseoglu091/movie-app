@@ -54,18 +54,18 @@ Route::get('/movies/edit/{id}','App\Http\Controllers\MovieController@EditMovie')
 Route::post('/movies/update/{id}', 'App\Http\Controllers\MovieController@UpdateMovie')->name('movie.update')->middleware('auth');
 
 // scenes
-Route::get('/scenes/{id}', 'App\Http\Controllers\MovieController@ScenesList')->name('scenes.list')->middleware('auth');
-Route::get('/scenes/add/{id}/', 'App\Http\Controllers\MovieController@ScenesAdd')->name('scene.add')->middleware('auth');
-Route::post('/scenes/save/{id}/', 'App\Http\Controllers\MovieController@ScenesSave')->name('scene.save')->middleware('auth');
-Route::delete('/scenes/delete/{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesDelete')->name('scene.delete')->middleware('auth');
-Route::get('/scenes/edit/{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesEdit')->name('scene.edit')->middleware('auth');
-Route::post('/scenes/update/s{id}/{scene_id}', 'App\Http\Controllers\MovieController@ScenesUpdate')->name('scene.update')->middleware('auth');
+Route::get('/scenes/{id}', 'App\Http\Controllers\SceneController@ScenesList')->name('scenes.list')->middleware('auth');
+Route::get('/scenes/add/{id}/', 'App\Http\Controllers\SceneController@ScenesAdd')->name('scene.add')->middleware('auth');
+Route::post('/scenes/save/{id}/', 'App\Http\Controllers\SceneController@ScenesSave')->name('scene.save')->middleware('auth');
+Route::delete('/scenes/delete/{id}/{scene_id}', 'App\Http\Controllers\SceneController@ScenesDelete')->name('scene.delete')->middleware('auth');
+Route::get('/scenes/edit/{id}/{scene_id}', 'App\Http\Controllers\SceneController@ScenesEdit')->name('scene.edit')->middleware('auth');
+Route::post('/scenes/update/s{id}/{scene_id}', 'App\Http\Controllers\SceneController@ScenesUpdate')->name('scene.update')->middleware('auth');
 
 // User
-Route::get('/settings', 'App\Http\Controllers\MovieController@Settings')->name('settings')->middleware('auth');
-Route::get('/delete', 'App\Http\Controllers\MovieController@DeleteUser')->name('user.delete')->middleware('auth');
+Route::get('/settings', 'App\Http\Controllers\SettingsController@Settings')->name('settings')->middleware('auth');
+Route::get('/delete', 'App\Http\Controllers\SettingsController@DeleteUser')->name('user.delete')->middleware('auth');
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-Route::post('/import', 'App\Http\Controllers\MovieController@Import')->name('import')->middleware('auth');
+Route::post('/import', 'App\Http\Controllers\SettingsController@Import')->name('import')->middleware('auth');
 
 Auth::routes();
 
