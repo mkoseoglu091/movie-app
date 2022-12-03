@@ -40,7 +40,12 @@ Finally you can log out to go back to the guest view of the appliation.
 
 ### Quickstart
 
+Demo User:
+email: demo@user.com
+pass: 12341234
+
 To quickly check out some of the features, please follow these steps:
-1. Create a user
-2. To test out the import feature, use the importTest.csv found in docs/demoFiles
+1. mysql -u [user] -p movie_app < docs/sql/quickstart.sql
+2. Log in using the demo user above
+3. To test out the import feature, use the importTest.csv found in docs/demoFiles
 4. To test adding  scenes, use the scene images Scene-1, Scene-2 and Scene-3 under docs/demoFiles

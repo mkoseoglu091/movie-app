@@ -32,12 +32,13 @@ YYYY-MM-DD, Title, (True/False) watched in Cinemas?, (True/False) watched with f
 10. Can login or register in order to access most features. Logged in users can delete their account through settings.
 11. php artisan route:list to see all routes
 
-## ngrok serve
+#### ngrok serve
+This is for my personal use regarding serving the site directly from my machine using ngrok. Without signing up to ngrok you will not be able to use this.
 
 php artisan serve
 open ngrok.exe
 ngrok http 8000
 
-## ToDo
+#### ToDo
 1. Optimize site for mobile
 2. Image thumbnailing for scenes to allow users to upload images larger than 50KB
