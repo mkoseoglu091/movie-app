@@ -40,5 +40,13 @@ open ngrok.exe
 ngrok http 8000
 
 #### ToDo
-1. Optimize site for mobile
-2. Image thumbnailing for scenes to allow users to upload images larger than 50KB
+
+1. search ve mylist sino layoutu
+2. cast/crew based search: birden cok aktor/director vs ekle kesistikleri filmleri goster
+3. collapsable ya da basinca populate olan data fieldlar
+
+90. Image thumbnailing for scenes to allow users to upload images larger than 50KB
+100. Optimize site for mobile
+
+actor/cast data
+https://api.themoviedb.org/3/person/31?api_key=7fcfa4a3af3449014f16b1ff41de256e&append_to_response=credits
