@@ -68,10 +68,11 @@ class MovieController extends Controller {
         $viewData = array();
         $viewData['Title'] = 'Watched Movies';
         //$viewData['movies'] = Movie::all();
-        $viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date');
+        $viewData['movies'] = Movie::orderBy('watched_date', 'ASC')->where('user_id', $user_id)->paginate(8);
+        //$viewData['movies'] = User::findorFail($user_id)->movie->sortBy('watched_date')->paginate(8);
         $viewData['user_id'] = $user_id;
 
-        return view('movies.my_list')
+        return view('movies.my_list_imdb')
             ->with("viewData",$viewData);
     }
 
