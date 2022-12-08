@@ -41,6 +41,36 @@ class MovieController extends Controller {
         return view('movies.search_movies')->with("viewData",$viewData);
     }
 
+    // search for a movie
+    function searchImdb(Request $request) {
+        $movie = $request->input('search');
+        $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$movie)->json()["results"];
+        
+        //TODO
+        // loop found movies add additional info (8 actors, directors, producers)
+        foreach($foundMovies as $movie){
+            $details = Http::get('https://api.themoviedb.org/3/movie/'.$movie->id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+            $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+        
+            $cast = $credits["cast"];
+            $highlight = array_slice($cast, 0, 8);
+
+            $crew = $credits["crew"];
+
+            foreach($crew as $c){
+                if($c["job"] === "Director"){
+                    $director = $c["name"];
+                }
+            }
+        }
+
+        $viewData = array();
+        $viewData['Title'] = 'Search Result';
+        $viewData['movies'] = $foundMovies;
+
+        return view('movies.search_movies_imdb')->with("viewData",$viewData);
+    }
+
     // search by tmdb id
     function searchtmdb(Request $request) {
         $movie = $request->input('search');
