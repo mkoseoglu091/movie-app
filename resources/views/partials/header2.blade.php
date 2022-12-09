@@ -8,11 +8,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
-        $('div[id^="detail"]').hide();
         for(let i=1; i<9; i++){
           $("#dButton" + i).click(function(){
             $('div[id^="detail"]').hide();
-            $("#detail" + i).toggle();
+            $("#detail" + i).show();
         });
         }
       });

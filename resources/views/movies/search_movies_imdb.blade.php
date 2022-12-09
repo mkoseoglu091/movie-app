@@ -19,7 +19,7 @@
     <table class="table">
     @foreach($viewData["movies"] as $movie) 
     <tr>
-      <td style="width:25%;"><div><img class="img-fluid" style="object-fit:cover;" src="https://image.tmdb.org/t/p/w300/{{ $movie['image'] }}" alt="Movie Poster"></div></td>
+      <td style="width:25%;"><div><img class="img-fluid" style="object-fit:cover;" src="https://image.tmdb.org/t/p/w300/{{ $movie['details']['poster_path'] }}" alt="Movie Poster"></div></td>
       <td style="width:70%;"><ul class="list-unstyled">
         <li class="h6">{{ $movie["title"] }}</li>
         <li>{{ $movie["release_date"] }}</li>
@@ -42,7 +42,7 @@
   @foreach($viewData["movies"] as $movie) 
   <div class="w-75 p-3"  id="{{ 'detail'.$loop->iteration }}">
   <div class="card flex-row mx-3 bg-light">
-    <img style="width:30%; height:100%;" class="card-img-lg-left img-responsive img-fluid mx-3 mb-3 mt-3" src="https://image.tmdb.org/t/p/w300/{{ $movie['image'] }}" alt="Movie Poster"/>
+    <img style="width:30%; height:100%;" class="card-img-lg-left img-responsive img-fluid mx-3 mb-3 mt-3" src="https://image.tmdb.org/t/p/w300/{{ $movie['details']['poster_path'] }}" alt="Movie Poster"/>
     <div class="card-body">
     <h5 class="card-title h1 h2-sm"> {{ $movie["title"] }}</h5>
       <p class="card-text"> Watched on: {{ $movie["watched_date"] }}

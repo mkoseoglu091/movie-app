@@ -48,20 +48,33 @@ class MovieController extends Controller {
         
         //TODO
         // loop found movies add additional info (8 actors, directors, producers)
-        foreach($foundMovies as $movie){
-            $details = Http::get('https://api.themoviedb.org/3/movie/'.$movie->id.'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-            $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie->id.'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-        
+        foreach($foundMovies as &$movie){
+            $details = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+            $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
+            $movie["details"][] = $details;
             $cast = $credits["cast"];
             $highlight = array_slice($cast, 0, 8);
+            $movie["cast"][] = $highlight;
 
             $crew = $credits["crew"];
 
+            $directors = array();
+            $producers = array();
+
             foreach($crew as $c){
+                if(str_contains(strtolower($c["job"]), "director")){
+                    $directors[$c["job"]][] = $c["name"];
+                }
+                if(str_contains(strtolower($c["job"]), "producer")){
+                    $producers[$c["job"]][] = $c["name"];
+                }
                 if($c["job"] === "Director"){
-                    $director = $c["name"];
+                    $movie["director"][] = $c["name"];
                 }
             }
+
+            $movie["directors"][] = $directors;
+            $movie["producers"][] = $producers;
         }
 
         $viewData = array();
