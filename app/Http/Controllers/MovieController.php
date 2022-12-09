@@ -51,10 +51,10 @@ class MovieController extends Controller {
         foreach($foundMovies as &$movie){
             $details = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
             $credits = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'/credits?api_key=7fcfa4a3af3449014f16b1ff41de256e')->json();
-            $movie["details"][] = $details;
+            $movie["details"] = $details;
             $cast = $credits["cast"];
             $highlight = array_slice($cast, 0, 8);
-            $movie["cast"][] = $highlight;
+            $movie["cast"] = $highlight;
 
             $crew = $credits["crew"];
 
@@ -69,12 +69,12 @@ class MovieController extends Controller {
                     $producers[$c["job"]][] = $c["name"];
                 }
                 if($c["job"] === "Director"){
-                    $movie["director"][] = $c["name"];
+                    $movie["director"] = $c["name"];
                 }
             }
 
-            $movie["directors"][] = $directors;
-            $movie["producers"][] = $producers;
+            $movie["directors"] = $directors;
+            $movie["producers"] = $producers;
         }
 
         $viewData = array();
