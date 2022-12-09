@@ -45,7 +45,7 @@ class MovieController extends Controller {
     function searchImdb(Request $request) {
         $movie = $request->input('search');
         $foundMovies = Http::get('https://api.themoviedb.org/3/search/movie?api_key=7fcfa4a3af3449014f16b1ff41de256e&query='.$movie)->json()["results"];
-        
+        $foundMovies = array_slice($foundMovies, 0, 6);
         //TODO
         // loop found movies add additional info (8 actors, directors, producers)
         foreach($foundMovies as &$movie){
@@ -69,17 +69,18 @@ class MovieController extends Controller {
                     $producers[$c["job"]][] = $c["name"];
                 }
                 if($c["job"] === "Director"){
-                    $movie["director"] = $c["name"];
+                    $director = $c["name"];
                 }
             }
 
             $movie["directors"] = $directors;
             $movie["producers"] = $producers;
+            $movie["director"] = $director;
         }
 
         $viewData = array();
         $viewData['Title'] = 'Search Result';
-        $viewData['movies'] = $foundMovies;
+        $viewData['movies'] = collect($foundMovies);
 
         return view('movies.search_movies_imdb')->with("viewData",$viewData);
     }

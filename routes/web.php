@@ -41,7 +41,7 @@ Route::post('/movies/filter/4/', 'App\Http\Controllers\MovieController@FilterMov
 Route::get('/movies/all/{id}','App\Http\Controllers\MovieController@SingleMovie')->name('myList.single')->middleware('auth');
 
 // search routes
-Route::get('/search','App\Http\Controllers\MovieController@search')->name('search');
+Route::get('/search','App\Http\Controllers\MovieController@searchImdb')->name('search');
 Route::get('/searchID','App\Http\Controllers\MovieController@searchtmdb')->name('tmdb');
 
 // movie details on search

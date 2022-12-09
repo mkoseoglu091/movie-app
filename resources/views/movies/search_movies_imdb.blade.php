@@ -32,35 +32,25 @@
     @endforeach
     </table>
 
-    @if($viewData["movies"]->count() > 0)
-    {{ $viewData["movies"]->links('pagination::bootstrap-4') }}
-    @endif
+
 
   </div>
 
 
   @foreach($viewData["movies"] as $movie) 
-  <div class="w-75 p-3"  id="{{ 'detail'.$loop->iteration }}">
+  <div class="w-75 p-3"  id="{{ 'detail'.$loop->iteration }}" style="display:none;">
   <div class="card flex-row mx-3 bg-light">
     <img style="width:30%; height:100%;" class="card-img-lg-left img-responsive img-fluid mx-3 mb-3 mt-3" src="https://image.tmdb.org/t/p/w300/{{ $movie['details']['poster_path'] }}" alt="Movie Poster"/>
     <div class="card-body">
     <h5 class="card-title h1 h2-sm"> {{ $movie["title"] }}</h5>
-      <p class="card-text"> Watched on: {{ $movie["watched_date"] }}
-          <br><t>My Rating: @foreach(range(1, $movie["rating"]) as $x) &#11088; @endforeach {{ $movie["rating"] }}
+      <p class="card-text"> Release Date: {{ $movie["release_date"] }}
+          <br><t>My Rating: @foreach(range(1, $movie["vote_average"]) as $x) &#11088; @endforeach {{ $movie["vote_average"] }}
 
           <br>Director: {{ $movie["director"]}}
           <br>
           
-          Budget: ${{ number_format($movie["budget"], 2) }}
+          Budget: ${{ number_format($movie["details"]["budget"], 2) }}
           <br>
-          Watched in Cinemas: @if($movie["cinema"]) <span>&#10004;</span> @else <span>&#10060;</span> @endif
-          <br>
-          Watched with Friends: @if($movie["friends"]) <span>&#10004;</span> @else <span>&#10060;</span> @endif
-          <br>
-          @if($movie["comments"])
-          Comments:
-          <p>{{ $movie["comments"] }}</p>
-          @endif
 
           <a href="{{ route('myList.single', $movie['id']) }}" class="btn btn-dark mb-1 mt-3">Details</a>
         
